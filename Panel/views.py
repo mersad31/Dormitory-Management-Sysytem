@@ -7,3 +7,15 @@ def home(request, *args, **kwargs):
                   status=200,
                   context=context,
                   using=None)
+
+
+def register(request):
+    pass
+
+
+def login(request):
+    pass
+
+
+def room_assignment(request):
+    pass
