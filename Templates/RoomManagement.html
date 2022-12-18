@@ -1,0 +1,47 @@
+{% extends "SharedTemplates/Content.html" %}
+{% block content %}
+    <div class="jumbotron shade pt-5">
+        <div class="bd-example c-grey">
+            <div class="row">
+                <div class="col-12 p-2">
+                    <div class="card shade h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">اطلاعات در قالب جدول</h5>
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">شماره</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">خوابگاه</th>
+                                    <th scope="col">ظرفیت</th>
+                                    <th scope="col">زمان ساخت</th>
+                                    <th scope="col">وضعیت</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for room in rooms %}
+                                    <tr>
+                                        <th class="text-dir-rtl text-right" scope="row">{{ room.code }}</th>
+                                        <td>{{ room.title }}</td>
+                                        <td>{{ room.dorm }}</td>
+                                        <td>{{ room.capacity }}</td>
+                                        <td>{{ room.created_date |date:"U" }}</td>
+                                        <td>
+                                            {% if room.status %}
+                                                در حال سکونت
+                                            {% else %}
+                                                غیر فعال
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

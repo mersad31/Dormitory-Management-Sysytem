@@ -1,0 +1,274 @@
+{% load static %}
+<!doctype html>
+<html lang="fa">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Nozha admin panel</title>
+    <meta name=”robots” content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+    <link href="{% static "css/fontawsome/all.min.css" %}" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+</head>
+
+<body class="gradient rtl text-left-rtl" data-new-gr-c-s-check-loaded="14.1088.0" data-gr-ext-installed="">
+
+<div class="bmd-layout-container bmd-drawer-f-l avam-container animated ">
+    <main class="bmd-layout-content">
+        <div class="container-fluid">
+            {% for message in messages %}
+                {% if message %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+            <div class="main_wrapper">
+                <!-- form -->
+                <div class="row">
+                    <div class="col-6 card shade mw-center mh-center">
+                        <img src="{% static "svg/logo-grey.svg" %}" alt="..." class="mw-center " height="130"
+                             width="300">
+                        <hr class="hr-dashed m-1">
+                        <form method="post"> {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="first_name" class="bmd-label-static">نام</label>
+                                                <input required name="first_name" type="text" class="form-control"
+                                                       id="first_name"
+                                                       aria-describedby="نام" placeholder="نام">
+                                                <small id="first_name" class="form-text text-muted">
+                                                    نام درج شده در کارت ملی
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="last_name" class="bmd-label-static">نام خانوادگی</label>
+                                                <input required name="last_name" type="text" class="form-control"
+                                                       id="last_name"
+                                                       aria-describedby="نام خانوادگی" placeholder="نام خانوادگی">
+                                                <small id="last_name" class="form-text text-muted">
+                                                    نام خانوادگی درج شده در کارت ملی
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="father_name" class="bmd-label-static">نام پدر</label>
+                                                <input required name="father_name" type="text" class="form-control"
+                                                       id="father_name"
+                                                       aria-describedby="نام پدر" placeholder="نام پدر">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="student_number" class="bmd-label-static">شماره
+                                                    دانشجویی</label>
+                                                <input required name="student_number" type="text" class="form-control"
+                                                       id="student_number"
+                                                       aria-describedby="شماره دانشجویی" placeholder="شماره دانشجویی">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="user_id" class="bmd-label-static">کد ملی</label>
+                                                <input required name="id_number" type="text" class="form-control"
+                                                       id="user_id"
+                                                       aria-describedby="کد ملی" placeholder="کد ملی">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="phone_number" class="bmd-label-static">شماره موبایل</label>
+                                                <input required name="phone_number" type="text" class="form-control"
+                                                       id="phone_number"
+                                                       aria-describedby="شماره موبایل" placeholder="شماره موبایل">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="form-group bmd-form-group">
+                                                <label for="sex" class="bmd-label-static">
+                                                    جنسیت
+                                                </label>
+                                                <select required name="sex" class="form-control" id="sex">
+                                                    <option value="1">آقا</option>
+                                                    <option>خانم</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group bmd-form-group">
+                                                <label for="is_paying" class="bmd-label-static">
+                                                    نوع ورودی
+                                                </label>
+                                                <select required name="paying" class="form-control" id="is_paying">
+                                                    <option value="1">روزانه</option>
+                                                    <option>شبانه</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="grade" class="bmd-label-static">مقطع تحصیلی</label>
+                                                <select required name="grade" class="form-control" id="grade">
+                                                    <option value="کارشناسی">کارشناسی</option>
+                                                    <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+                                                    <option value="دکترا">دکترا</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group bmd-form-group">
+                                                <label for="sex" class="bmd-label-static">
+                                                    هم اتاقی مورد نظر
+                                                </label>
+                                                <select required name="roommate" class="form-control" id="sex">
+                                                    <option value="0">مهم نیست</option>
+                                                    <option>فردین مظفری</option>
+                                                    <option>علی امینی</option>
+                                                </select>
+                                                <small id="first_name" class="form-text text-muted">
+                                                    درصورت تمایل به انتخاب هم اتاقی, یکی از کاربران را انتحاب نمایید.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="grade" class="bmd-label-static">سحرخیز بودن</label>
+                                                <select required name="early" class="form-control" id="grade">
+                                                    <option value="1">آره</option>
+                                                    <option value="0">نه</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="grade" class="bmd-label-static">اهمیت سکوت خوابگاه</label>
+                                                <select required name="noisy" class="form-control" id="grade">
+                                                    <option value="1">آره</option>
+                                                    <option value="0">نه</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="grade" class="bmd-label-static">ملیت</label>
+                                                <select required name="nation" class="form-control" id="grade">
+                                                    <option value="1">بومی</option>
+                                                    <option value="0">غیربومی</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group m-0 bmd-form-group">
+                                                <label for="password" class="bmd-label-static">گذرواژه</label>
+                                                <input required name="password" type="password" class="form-control"
+                                                       id="password"
+                                                       placeholder="گذرواژه">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn shade f-primary btn-sm mb-1 text-left">
+                                ثبت نام
+                            </button>
+
+                            <button onclick="window.location.href='{% url "Login" %}'" type="submit"
+                                    class="btn shade f-primary btn-sm mb-1 text-right">
+                                ورود
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                <!--  -->
+            </div>
+
+        </div>
+    </main>
+</div>
+
+
+<div id="torrent-scanner-popup" style="display: none;"></div>
+<div id="apple-password-autofill-list"
+     style="z-index: 2147483647 !important; padding: 0px !important; margin: 0px !important; border-radius: 8px !important; position: fixed !important; color-scheme: normal !important; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px, rgba(0, 0, 0, 0.18) 0px 8px 15px 6px !important; border: 1px solid rgba(0, 0, 0, 0.9) !important; overflow: hidden !important; backdrop-filter: blur(20px) !important; background-color: rgba(35, 35, 35, 0.8) !important; top: 303px !important; left: -999999px !important; opacity: 0 !important; visibility: hidden !important;"></div>
+</body>
+
+
+<script src="{% static "js/vendor/modernizr.js" %}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    $(document).ready(function () {
+        $('body').bootstrapMaterialDesign();
+    });
+</script>
+<script>
+    !function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (!d.getElementById(id)) {
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://weatherwidget.io/js/widget.min.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+    }(document, 'script', 'weatherwidget-io-js');
+</script>
+<script src="{% static "js/main.js" %}"></script>
+<script>
+    $(document).ready(function () {
+        $('body').bootstrapMaterialDesign();
+    });
+</script>
+</body>
+
+</html>

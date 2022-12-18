@@ -1,0 +1,45 @@
+{% extends "SharedTemplates/Content.html" %}
+{% block content %}
+    <div class="jumbotron shade pt-5">
+        <div class="bd-example c-grey">
+            <div class="row">
+                <div class="col-12 p-2">
+                    <div class="card shade h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">اطلاعات در قالب جدول</h5>
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">مقطع</th>
+                                    <th scope="col">شماره دانشجویی</th>
+                                    <th scope="col">نام</th>
+                                    <th scope="col">نام خانوادگی</th>
+                                    <th scope="col">خوابگاه</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <th scope="row">{{ student.grade }}</th>
+                                        <td>{{ student.student_number }}</td>
+                                        <td>{{ student.user_instance.first_name }}</td>
+                                        <td>{{ student.user_instance.last_name }}</td>
+                                        <td>
+                                            {% if student.room %}
+                                                {{ student.room }}
+                                            {% else %}
+                                                در حال تخصیص
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

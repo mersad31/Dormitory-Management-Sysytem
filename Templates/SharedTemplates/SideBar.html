@@ -4,22 +4,27 @@
             <p>سامانه مدیریت خوابگاه</p>
         </a>
     </header>
-    <p class="side-comment">دانشجو</p>
-    <ul>
-        <li class="side a-collapse short ">
-            <a href="" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت خوابگاه</a>
-        </li>
-    </ul>
-    <p class="side-comment">کارمند</p>
-    <ul>
-        <li class="side a-collapse short ">
-            <a href="" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت دانشجو ها</a>
-        </li>
-        <li class="side a-collapse short ">
-            <a href="" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت خوابگاه ها</a>
-        </li>
-        <li class="side a-collapse short ">
-            <a href="" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت اتاق ها</a>
-        </li>
-    </ul>
+    {% if not user.is_staff %}
+        <p class="side-comment">دانشجو</p>
+        <ul>
+            <li class="side a-collapse short ">
+                <a href="{% url "Room" %}" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت اتاق</a>
+            </li>
+        </ul>
+    {% else %}
+        <p class="side-comment">کارمند</p>
+        <ul>
+            <li class="side a-collapse short ">
+                <a href="{% url "Student" %}" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت دانشجو
+                    ها</a>
+            </li>
+            <li class="side a-collapse short ">
+                <a href="{% url "Dorm" %}" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت خوابگاه ها</a>
+            </li>
+            <li class="side a-collapse short ">
+                <a href="{% url "Room" %}" class="side-item "><i class="fas fa-desktop  mr-1"></i>مدیریت اتاق ها</a>
+            </li>
+        </ul>
+    {% endif %}
+
 </div>
