@@ -2,12 +2,45 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as login_
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
 from .models import UserProfile, Dorm, Room, Setting
 
 
 def home(request, *args, **kwargs):
     context = {}
+    grade_1_male = UserProfile.objects.filter(grade='کارشناسی', sex=True)
+    grade_1_female = UserProfile.objects.filter(grade='کارشناسی', sex=False)
+
+    grade_2_male = UserProfile.objects.filter(grade='ارشد', sex=True)
+    grade_2_female = UserProfile.objects.filter(grade='ارشد', sex=False)
+
+    grade_3_male = UserProfile.objects.filter(grade='دکترا', sex=True)
+    grade_3_female = UserProfile.objects.filter(grade='دکترا', sex=False)
+
+    all_students = UserProfile.objects.all().exclude(grade='مدیر')
+
+    rooms = Room.objects.all()
+    context['chart1'] = {
+        'male': grade_1_male.count(),
+        'female': grade_1_female.count(),
+    }
+
+    context['chart2'] = {
+        'male': grade_2_male.count(),
+        'female': grade_2_female.count(),
+    }
+
+    context['chart3'] = {
+        'male': grade_3_male.count(),
+        'female': grade_3_female.count(),
+    }
+
+    context['all_students'] = all_students.count()
+    context['rooms'] = rooms.count()
+
+    context['left_rooms'] = context['rooms'] - context['all_students']
+
     if request.user.is_authenticated:
         if request.method == 'POST':
             signup = request.POST.get('signup', '3')
@@ -152,6 +185,15 @@ def login(request):
                       status=200,
                       context=context,
                       using=None)
+
+
+def logout_view(request):
+    context = {}
+    logout(request)
+    return render(request=request, template_name='Login.html', content_type='text/html',
+                  status=200,
+                  context=context,
+                  using=None)
 
 
 def student_management(request):

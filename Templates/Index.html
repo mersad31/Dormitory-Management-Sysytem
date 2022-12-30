@@ -1,32 +1,153 @@
 {% extends "SharedTemplates/Content.html" %}
 {% block content %}
     <div class="jumbotron shade pt-5">
-        <div class="bd-example c-grey">
-            <p class="text-dir-rtl text-right">
-                جهت انجام فرایند تخصیص اتاق ابتدا
-                <span class="fnt-code c-primary ">
+        <div class="row">
+            <div class="col-12 m-5">
+                <div class="bd-example c-grey">
+                    <p class="text-dir-rtl text-right">
+                        جهت انجام فرایند تخصیص اتاق ابتدا
+                        <span class="fnt-code c-primary ">
                      ثبت نام
                 </span>
-                را غیرفعال کرده و سپس بر روی بر روی دکمه
-                <span class="fnt-code c-primary ">
+                        را غیرفعال کرده و سپس بر روی بر روی دکمه
+                        <span class="fnt-code c-primary ">
                     تخصیص اتاق
                 </span>
-                کلیلک کنید.
-            </p>
+                        کلیلک کنید.
+                    </p>
 
-            {% if signup %}
-                <p class="text-dir-rtl text-right">
-                    <button onclick="stopSignUP()">غیرفعال سازی ثبت نام</button>
-                </p>
-            {% endif %}
+                    {% if signup %}
+                        <p class="text-dir-rtl text-right">
+                            <button class="btn btn-danger" onclick="stopSignUP()">غیرفعال سازی ثبت نام</button>
+                        </p>
+                    {% endif %}
 
-            {% if not signup %}
-                <p class="text-dir-rtl text-right">
-                    <button onclick="startSignUP()">فعال سازی ثبت نام</button>
-                    <button onclick="startRoom()">آغاز فرایند تخصیص اتاق</button>
-                </p>
-            {% endif %}
+                    {% if not signup %}
+                        <p class="text-dir-rtl text-right">
+                            <button class="btn btn-primary" onclick="startSignUP()">فعال سازی ثبت نام</button>
+                            <button class="btn btn-primary" onclick="startRoom()">آغاز فرایند تخصیص اتاق</button>
+                        </p>
+                    {% endif %}
 
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row mb-5">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="card shade ">
+                                    <div class="card-body">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <h5 class="card-title">دانشجویان مقطع کارشناسی</h5>
+
+                                        <hr>
+                                        <canvas id="chart1" width="501" height="250"
+                                                style="display: block; height: 200px; width: 401px;"
+                                                class="chartjs-render-monitor"></canvas>
+                                        <hr class="hr-dashed">
+                                        <p class="text-center c-danger">به تفکیک جنسیت</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="card shade ">
+                                    <div class="card-body">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <h5 class="card-title">دانشجویان مقطع ارشد</h5>
+
+                                        <hr>
+                                        <canvas id="chart2" width="501" height="250"
+                                                style="display: block; height: 200px; width: 401px;"
+                                                class="chartjs-render-monitor"></canvas>
+                                        <hr class="hr-dashed">
+                                        <p class="text-center c-danger">به تفکیک جنسیت</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="card shade ">
+                                    <div class="card-body">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <h5 class="card-title">دانشجویان مقطع دکترا</h5>
+
+                                        <hr>
+                                        <canvas id="chart3" width="501" height="250"
+                                                style="display: block; height: 200px; width: 401px;"
+                                                class="chartjs-render-monitor"></canvas>
+                                        <hr class="hr-dashed">
+                                        <p class="text-center c-danger">به تفکیک جنسیت</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-5">
+                            <div class="col-xl-6 col-md-6 col-sm-12 p-2">
+                                <div class="box-card mini animate__animated animate__flipInY"><i
+                                        class="fab far fa-clock b-second" aria-hidden="true"></i>
+                                    <span class="c-second">تعداد کل دانشجویان</span>
+                                    <span>{{ all_students }}</span>
+                                    <p class="mt-3 mb-1"><i class="far fas fa-person-booth mr-1 c-second"></i></p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-sm-12 p-2">
+                                <div class="box-card mini animate__animated animate__flipInY    "><i
+                                        class="fab far fa-clock b-second" aria-hidden="true"></i>
+                                    <span class="c-second">کل ظرفیت خوابگاه ها</span>
+                                    <span>{{ rooms }}</span>
+                                    <p class="mt-3 mb-1"><i class="far fas fa-wifi mr-1 c-second"></i></p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-12 col-sm-12 p-2">
+                                <div class="box-card mini animate__animated animate__flipInY    "><i
+                                        class="fab far fa-clock b-second" aria-hidden="true"></i>
+                                    <span class="c-second">ظرفیت باقی مانده خوابگاه ها</span>
+                                    <span>{{ left_rooms }}</span>
+                                    <p class="mt-3 mb-1"><i class="far fas fa-wifi mr-1 c-second"></i></p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-12 col-sm-12 p-2">
+                                <div class="box-card mini animate__animated animate__flipInY    "><i
+                                        class="fab far fa-clock b-second" aria-hidden="true"></i>
+                                    <span class="c-second">وضعیت ثبت نام</span>
+                                    {% if signup %}
+                                        <span>در حال ثبت نام</span>
+                                    {% else %}
+                                        <span>ثبت نام به پایان رسیده است</span>
+                                    {% endif %}
+                                    <p class="mt-3 mb-1"><i class="far fas fa-wifi mr-1 c-second"></i></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -47,4 +168,66 @@
 
 
     </script>
+
+
+    <script>
+        const chart1 = document.getElementById('chart1');
+        const chart2 = document.getElementById('chart2');
+        const chart3 = document.getElementById('chart3');
+        new Chart(chart1, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'دانشجویان خانم',
+                    'دانشجویان آقا',
+                ],
+                datasets: [{
+                    label: 'تعداد دانشجوبان',
+                    data: [parseInt("{{ chart1.male }}"), parseInt("{{ chart1.female }}"),],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+        new Chart(chart2, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'دانشجویان خانم',
+                    'دانشجویان آقا',
+                ],
+                datasets: [{
+                    label: 'تعداد دانشجوبان',
+                    data: [parseInt("{{ chart2.male }}"), parseInt("{{ chart2.female }}"),],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+        new Chart(chart3, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'دانشجویان خانم',
+                    'دانشجویان آقا',
+                ],
+                datasets: [{
+                    label: 'تعداد دانشجوبان',
+                    data: [parseInt("{{ chart3.male }}"), parseInt("{{ chart3.female }}"),],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+    </script>
+
 {% endblock %}
