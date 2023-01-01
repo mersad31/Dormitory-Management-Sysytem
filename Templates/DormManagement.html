@@ -16,6 +16,7 @@
                                     <th scope="col">جنسیت</th>
                                     <th scope="col">زمان ساخت</th>
                                     <th scope="col">وضعیت</th>
+                                    <th scope="col">ویرایش</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +32,10 @@
                                             {% else %}
                                                 غیر فعال
                                             {% endif %}
+                                        </td>
+                                        <td>
+                                            <span onclick="window.open('{% url "admin:Panel_dorm_change" dorm.id %}');"
+                                                  style="cursor: pointer;" class="fas fa-edit"></span>
                                         </td>
                                     </tr>
                                 {% endfor %}

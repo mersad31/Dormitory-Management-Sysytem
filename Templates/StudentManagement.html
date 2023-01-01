@@ -16,6 +16,8 @@
                                     <th scope="col">نام</th>
                                     <th scope="col">نام خانوادگی</th>
                                     <th scope="col">خوابگاه</th>
+                                    <th scope="col">ویرایش</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +33,10 @@
                                             {% else %}
                                                 در حال تخصیص
                                             {% endif %}
+                                        </td>
+                                        <td>
+                                            <span onclick="window.open('{% url "admin:Panel_userprofile_change" student.id %}');"
+                                                  style="cursor: pointer;" class="fas fa-edit"></span>
                                         </td>
                                     </tr>
                                 {% endfor %}

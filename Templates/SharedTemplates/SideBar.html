@@ -4,6 +4,11 @@
             <p>سامانه مدیریت خوابگاه</p>
         </a>
     </header>
+    <ul>
+        <li class="side a-collapse short ">
+            <a href="{% url "HomePage" %}" class="side-item "><i class="fas fa-desktop  mr-1"></i>صفحه اصلی</a>
+        </li>
+    </ul>
     {% if not user.is_staff %}
         <p class="side-comment">دانشجو</p>
         <ul>

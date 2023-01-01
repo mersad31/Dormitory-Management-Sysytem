@@ -17,6 +17,8 @@
                                     <th scope="col">ظرفیت</th>
                                     <th scope="col">زمان ساخت</th>
                                     <th scope="col">وضعیت</th>
+                                    <th scope="col">ویرایش</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,6 +35,11 @@
                                             {% else %}
                                                 غیر فعال
                                             {% endif %}
+                                        </td>
+                                        <td>
+                                            <span onclick="window.open('{% url "admin:Panel_room_change" room.id %}');"
+                                                  style="cursor: pointer;"
+                                                  class="fas fa-edit"></span>
                                         </td>
                                     </tr>
                                 {% endfor %}
