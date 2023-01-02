@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t@0lvw-$g-5)$j$)mbp$uc%@ju+ljtn^!&x5f%baw@m)uca=#a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://*.mr2mato.cloud', 'https://dormitory.mr2mato.cloud']
 ALLOWED_HOSTS = ['dormitory.mr2mato.cloud', 'www.dormitory.mr2mato.cloud']
