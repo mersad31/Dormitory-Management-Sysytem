@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: dorm_management_system_container_image:latest
+    container_name: 'DormManagementSystem_container'
+    command: gunicorn DormManagementSystem.wsgi:application runserver --workers 3 --bind 0.0.0.0:15001
+    volumes:
+      - ./db.sqlite3:/usr/src/App/db.sqlite3
+      - ./UploadedFiles/:/usr/src/App/UploadedFiles/
+      - ./StaticFiles/:/usr/src/App/StaticFiles/
+    ports:
+      - "15002:15002"
+    network_mode: bridge
+    restart: always
