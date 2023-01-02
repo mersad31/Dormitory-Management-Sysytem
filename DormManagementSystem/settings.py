@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t@0lvw-$g-5)$j$)mbp$uc%@ju+ljtn^!&x5f%baw@m)uca=#a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = ['https://*.djangoapp.ir', 'https://djangoapp.ir']
+ALLOWED_HOSTS = ['djangoapp.ir', 'www.djangoapp.ir.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -117,6 +117,7 @@ USE_TZ = True
 
 STATIC_URL = r'/StaticFiles/'
 STATICFILES_DIRS = [BASE_DIR / "StaticFiles"]
+STATIC_ROOT = r'/StaticFiles/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
