@@ -68,7 +68,10 @@ TEMPLATES = [
         },
     },
 ]
-
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+)
 WSGI_APPLICATION = 'DormManagementSystem.wsgi.application'
 
 # Database
@@ -117,7 +120,6 @@ USE_TZ = True
 
 STATIC_URL = r'/StaticFiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, r'StaticFiles')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
