@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   web:
@@ -10,6 +10,6 @@ services:
       - ./db.sqlite3:/usr/src/App/db.sqlite3
       - ./StaticFiles/:/usr/src/App/StaticFiles/
     ports:
-      - "15002:15002"
+      - "127.0.0.1:15002:15002"
     network_mode: bridge
     restart: always
