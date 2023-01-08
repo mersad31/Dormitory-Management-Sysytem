@@ -5,12 +5,13 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/StaticFiles" />
             <path value="file://$PROJECT_DIR$/StaticFiles/css" />
             <path value="file://$PROJECT_DIR$/StaticFiles/font" />
             <path value="file://$PROJECT_DIR$/StaticFiles/img" />
             <path value="file://$PROJECT_DIR$/StaticFiles/js" />
             <path value="file://$PROJECT_DIR$/StaticFiles/svg" />
+            <path value="file://$PROJECT_DIR$/StaticFiles" />
+            <path value="file://$PROJECT_DIR$/StaticFiles/admin" />
           </resourceRoots>
         </entryData>
       </entry>
