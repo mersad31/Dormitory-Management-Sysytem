@@ -1,8 +1,12 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as login_
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import UserProfile, Dorm, Room, Setting
 
@@ -68,9 +72,27 @@ def home(request, *args, **kwargs):
                   using=None)
 
 
+@csrf_exempt
+def get_users(request):
+    if request.method == 'POST':
+        sex = request.POST.get("sex")
+        print(sex)
+        if sex == 'true':
+            sex = True
+        else:
+            sex = False
+        users = UserProfile.objects.filter(sex=sex)
+        users_list = []
+        for user in users:
+            users_list.append({
+                'name': user.user_instance.last_name + ' ' + user.user_instance.last_name,
+                'id': user.id,
+            })
+        return JsonResponse({'users': users_list})
+
+
 def register(request):
     context = {}
-
     if request.user.is_authenticated:
         return redirect(to=home)
     else:
@@ -141,7 +163,7 @@ def register(request):
 
             user_profile.grade = grade
             if roommate != '0':
-                user_profile.requested_roommate_id = user_profile
+                user_profile.requested_roommate_id = UserProfile.objects.get(id=roommate)
 
             if noisy == '1':
                 user_profile.is_noisy = True
@@ -250,21 +272,98 @@ def room_assignment() -> list:
         return [False, 'ظرفیت اتاق ها از تعداد دانشجو ها کم تر میباشد.']
 
     students_score = {}
-
+    registered_rooms = []
     for student in students:
-        students_score[student.student_number] = {
-            'native': student.is_native_born,
-            'paid': student.is_paying,
-            'early': student.is_early_bird,
-            'noisy': student.is_noisy,
-            'requested_roommate': student.requested_roommate.username,
-        }
+        try:
+            students_score[student.user_instance.id] = {
+                'native': student.is_native_born,
+                'paid': student.is_paying,
+                'early': student.is_early_bird,
+                'noisy': student.is_noisy,
+                'requested_roommate': student.requested_roommate.id,
+            }
+        except:
+            students_score[student.user_instance.id] = {
+                'native': student.is_native_born,
+                'paid': student.is_paying,
+                'early': student.is_early_bird,
+                'noisy': student.is_noisy,
+                'requested_roommate': '0',
+            }
 
     score_table = {
         'paid': 2,
-        'native_born': 2,
+        'native': 2,
         'bonus': 1,
     }
+
+    sorted_users = []
+    # Phase one
+    for key, value in students_score.items():
+        score = 0
+        for key_, value_ in key.items():
+            if key_ == 'native':
+                if not value_:
+                    score += score_table['native']
+            elif key_ == 'paid':
+                if not value_:
+                    score += score_table['paid']
+            elif key_ == 'requested_roommate':
+                if value_ == '0':
+                    score += score_table['bonus']
+        students_score[key]['score'] = score
+
+    grouping_divider = total_capacity // total_room_number
+    level_0_users = []
+    level_1_users = []
+    level_2_users = []
+    level_3_users = []
+    level_4_users = []
+    level_5_users = []
+    for key, value in students_score.items():
+        score = students_score[key]['score']
+        if score == 0:
+            level_0_users.append({
+                'id': key,
+                'score': 0,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+        elif score == 1:
+            level_1_users.append({
+                'id': key,
+                'score': 1,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+        elif score == 2:
+            level_2_users.append({
+                'id': key,
+                'score': 2,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+        elif score == 3:
+            level_3_users.append({
+                'id': key,
+                'score': 3,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+        elif score == 4:
+            level_4_users.append({
+                'id': key,
+                'score': 4,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+        elif score == 5:
+            level_5_users.append({
+                'id': key,
+                'score': 5,
+                'roommate_id': students_score[key]['requested_roommate'],
+            })
+
+        students_score[key]['score'] = score
+
+    for user in level_5_users:
+        pass
+
 
     return [True, '']
 

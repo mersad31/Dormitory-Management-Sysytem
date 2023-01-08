@@ -1,4 +1,4 @@
-from .views import home, login, register, room_management, student_management, dorm_management, logout_view
+from .views import home, login, register, room_management, student_management, dorm_management, logout_view, get_users
 from django.urls import path
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('room-management', room_management, name='Room'),
     path('student-management', student_management, name='Student'),
     path('dorm-management', dorm_management, name='Dorm'),
+    path('get-students', get_users, name='GetStudents'),
 ]

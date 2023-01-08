@@ -121,9 +121,10 @@
                                                 <label for="sex" class="bmd-label-static">
                                                     جنسیت
                                                 </label>
-                                                <select required name="sex" class="form-control" id="sex">
+                                                <select onchange="addUsers()" required name="sex" class="form-control"
+                                                        id="sex">
                                                     <option value="1">آقا</option>
-                                                    <option>خانم</option>
+                                                    <option value="0">خانم</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -154,13 +155,12 @@
                                     <div class="row">
                                         <div class="col-5">
                                             <div class="form-group bmd-form-group">
-                                                <label for="sex" class="bmd-label-static">
+                                                <label for="roommate" class="bmd-label-static">
                                                     هم اتاقی مورد نظر
                                                 </label>
-                                                <select required name="roommate" class="form-control" id="sex">
-                                                    <option value="0">مهم نیست</option>
-                                                    <option>فردین مظفری</option>
-                                                    <option>علی امینی</option>
+                                                <select required name="roommate" class="form-control" id="roommate">
+                                                    <option value="0">اهمیتی ندارد</option>
+
                                                 </select>
                                                 <small id="first_name" class="form-text text-muted">
                                                     درصورت تمایل به انتخاب هم اتاقی, یکی از کاربران را انتحاب نمایید.
@@ -169,10 +169,10 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group m-0 bmd-form-group">
-                                                <label for="grade" class="bmd-label-static">سحرخیز بودن</label>
+                                                <label for="grade" class="bmd-label-static">سحرخیزی</label>
                                                 <select required name="early" class="form-control" id="grade">
-                                                    <option value="1">آره</option>
-                                                    <option value="0">نه</option>
+                                                    <option value="1">سحرخیز هستم</option>
+                                                    <option value="0">سحرخیز نیستم</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -180,14 +180,14 @@
                                             <div class="form-group m-0 bmd-form-group">
                                                 <label for="grade" class="bmd-label-static">اهمیت سکوت خوابگاه</label>
                                                 <select required name="noisy" class="form-control" id="grade">
-                                                    <option value="1">آره</option>
-                                                    <option value="0">نه</option>
+                                                    <option value="1">مهم است</option>
+                                                    <option value="0">اهمیتی ندارد</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group m-0 bmd-form-group">
-                                                <label for="grade" class="bmd-label-static">ملیت</label>
+                                                <label for="grade" class="bmd-label-static">محل سکونت</label>
                                                 <select required name="nation" class="form-control" id="grade">
                                                     <option value="1">بومی</option>
                                                     <option value="0">غیربومی</option>
@@ -228,7 +228,41 @@
     </main>
 </div>
 
+<script>
+    function removeOptions(selectElement) {
+        let i, L = selectElement.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
 
+    const addUsers = () => {
+        let sex = document.getElementById("sex").value
+        sex = sex !== "0";
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'GetStudents' %}",
+            data: {"sex": sex},
+            success: function (response) {
+                const users = response['users'];
+                console.log(users)
+                let selectTag = document.getElementById("roommate");
+                removeOptions(selectTag)
+                let newOption = new Option('تفاوتی ندارد', '0');
+                selectTag.appendChild(newOption)
+                for (let i = 0; i < users.length; i++) {
+                    let newOption = new Option(users[i]['name'], users[i]['id']);
+                    selectTag.appendChild(newOption)
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
+    addUsers()
+</script>
 <div id="torrent-scanner-popup" style="display: none;"></div>
 <div id="apple-password-autofill-list"
      style="z-index: 2147483647 !important; padding: 0px !important; margin: 0px !important; border-radius: 8px !important; position: fixed !important; color-scheme: normal !important; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px, rgba(0, 0, 0, 0.18) 0px 8px 15px 6px !important; border: 1px solid rgba(0, 0, 0, 0.9) !important; overflow: hidden !important; backdrop-filter: blur(20px) !important; background-color: rgba(35, 35, 35, 0.8) !important; top: 303px !important; left: -999999px !important; opacity: 0 !important; visibility: hidden !important;"></div>

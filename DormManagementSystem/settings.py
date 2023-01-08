@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-t@0lvw-$g-5)$j$)mbp$uc%@ju+ljtn^!&x5f%baw@m)uca=#a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-CSRF_TRUSTED_ORIGINS = ['https://*.mr2mato.cloud', 'https://dormitory.mr2mato.cloud', 'https://*']
-ALLOWED_HOSTS = ['*', '127.0.0.1', 'dormitory.mr2mato.cloud']
+CSRF_TRUSTED_ORIGINS = ['https://*.mr2mato.ir', 'https://dormitory.mr2mato.ir', 'https://*']
+ALLOWED_HOSTS = ['*', '127.0.0.1', 'dormitory.mr2mato.ir']
 # Application definition
 
 INSTALLED_APPS = [
