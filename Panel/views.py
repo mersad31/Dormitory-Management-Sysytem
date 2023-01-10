@@ -57,7 +57,7 @@ def home(request, *args, **kwargs):
                 messages.success(request=request, message='ثبت نام با موفقیت آغاز شد')
             if room == 'start_process':
                 result = room_assignment()
-                if request[0]:
+                if result[0]:
                     messages.success(request=request, message='فرایندس تخصیص اتاق ها با موفقیت انجام شد.')
                 else:
                     messages.error(request=request, message=f'{result[1]}')
@@ -135,13 +135,21 @@ def register(request):
 
             user_instance.first_name = first_name
             user_instance.last_name = last_name
+
             user_instance.save()
             user_profile = UserProfile.objects.create(user_instance=user_instance)
             user_profile.student_number = student_number
             if sex == '1':
                 user_profile.sex = True
+                last_dorm = Dorm.objects.get(sex=True)
+                last_room = Room.objects.filter(dorm=last_dorm)
+                user_profile.room = last_room[0]
             else:
                 user_profile.sex = False
+                last_dorm = Dorm.objects.get(sex=False)
+                last_room = Room.objects.filter(dorm=last_dorm)
+                user_profile.room = last_room[0]
+
             user_profile.sex = sex
             if nation == '1':
                 user_profile.is_native_born = True
@@ -257,7 +265,7 @@ def room_management(request):
 
 def room_assignment() -> list:
     # for male , sample flow
-    dorm = Dorm.objects.filter(sex=True)
+    dorm = Dorm.objects.get(sex=True)
     rooms = Room.objects.filter(dorm=dorm)
     students = UserProfile.objects.all().exclude(grade='مدیر', sex=False)
 
@@ -274,6 +282,9 @@ def room_assignment() -> list:
     students_score = {}
     registered_rooms = []
     for student in students:
+        # student.room = None
+        # student.room_confirmed = True
+        # student.save()
         try:
             students_score[student.user_instance.id] = {
                 'native': student.is_native_born,
@@ -301,7 +312,7 @@ def room_assignment() -> list:
     # Phase one
     for key, value in students_score.items():
         score = 0
-        for key_, value_ in key.items():
+        for key_, value_ in value.items():
             if key_ == 'native':
                 if not value_:
                     score += score_table['native']
@@ -360,10 +371,36 @@ def room_assignment() -> list:
             })
 
         students_score[key]['score'] = score
-
+    final_users = []
     for user in level_5_users:
-        pass
+        final_users.append(user)
 
+    for user in level_4_users:
+        final_users.append(user)
+
+    for user in level_3_users:
+        final_users.append(user)
+
+    for user in level_2_users:
+        final_users.append(user)
+
+    for user in level_1_users:
+        final_users.append(user)
+
+    last_filled_room = 0
+    try:
+        for room in rooms:
+            i = int(room.capacity)
+            for i in range(0, i):
+                student_ = UserProfile.objects.get(user_instance_id=final_users[last_filled_room]['id'])
+                student_.room = room
+                student_.room_confirmed = True
+                student_.save()
+                last_filled_room += 1
+    except IndexError:
+        pass
+    except Exception as error:
+        return [False, str(error)]
 
     return [True, '']
 
