@@ -12,7 +12,7 @@ RUN  apk add libpq build-base
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install  --default-timeout=240 -r requirements.txt
 
 # lint
 RUN pip install --upgrade pip
