@@ -1,4 +1,5 @@
 import json
+from django.db.models import F
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as login_
@@ -392,7 +393,8 @@ def room_assignment() -> list:
         for room in rooms:
             i = int(room.capacity)
             for i in range(0, i):
-                student_ = UserProfile.objects.get(user_instance_id=final_users[last_filled_room]['id'])
+                student_ = UserProfile.objects.get(user_instance_id=final_users[last_filled_room]['id']).order_by(
+                    F('requested_roommate').desc(nulls_last=True))
                 student_.room = room
                 student_.room_confirmed = True
                 student_.save()

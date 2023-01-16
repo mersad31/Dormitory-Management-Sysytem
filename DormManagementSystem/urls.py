@@ -8,6 +8,7 @@ from . import settings
 urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path('', include('Panel.urls'), name='Shop'),
+    re_path('accounts/', include('django.contrib.auth.urls')),
 ]
 if not settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

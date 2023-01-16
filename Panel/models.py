@@ -70,8 +70,8 @@ class UserProfile(models.Model):
     room = models.ForeignKey(to=Room, on_delete=models.PROTECT, blank=True, null=True, related_name='+',
                              verbose_name='اتاق مورد نظر')
     room_confirmed = models.BooleanField(default=False, blank=True, null=True, verbose_name='وضعیت تاییدیه اتاق')
-    is_native_born = models.BooleanField(default=True, blank=False, null=False, verbose_name='بومی یا غیر بومی')
-    is_paying = models.BooleanField(default=False, blank=False, null=False, verbose_name='شبانه یا روزانه')
+    is_native_born = models.BooleanField(default=True, blank=False, null=False, verbose_name='دانشجو بومی هستم')
+    is_paying = models.BooleanField(default=False, blank=False, null=False, verbose_name='دانشجو شبانه هستم')
     father_name = models.CharField(max_length=32, blank=True, null=True, verbose_name='نام پدر')
     id_card_number = models.SmallIntegerField(blank=True, null=True, verbose_name='کد ملی')
     phone_number = models.CharField(max_length=16, blank=True, null=True, verbose_name='شماره تماس')
