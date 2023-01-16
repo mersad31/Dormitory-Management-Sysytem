@@ -3,7 +3,7 @@ version: '3.9'
 services:
   web:
 #    build: .
-    image: dorm_management_system_container_image
+    image: dorm_management_system_container_image:latest
     container_name: 'DormManagementSystem_container'
     command: gunicorn DormManagementSystem.wsgi:application runserver --workers 3 --bind 0.0.0.0:15002
     volumes:
