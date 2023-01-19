@@ -25,7 +25,10 @@
                     {% if not signup %}
                         <p class="text-dir-rtl text-right">
                             <button class="btn btn-primary" onclick="startSignUP()">فعال سازی ثبت نام</button>
-                            <button class="btn btn-primary" onclick="startRoom()">آغاز فرایند تخصیص اتاق</button>
+                            <button class="btn btn-primary" onclick="startRoom('male')">آغاز فرایند تخصیص اتاق آقایان
+                            </button>
+                            <button class="btn btn-primary" onclick="startRoom('female')">آغاز فرایند تخصیص اتاق خانم ها
+                            </button>
                         </p>
                     {% endif %}
 
@@ -161,8 +164,8 @@
             document.getElementById("formToSubmit").submit();
         }
 
-        function startRoom() {
-            document.body.innerHTML += '<form id="formToSubmit" method="post">{% csrf_token %}<input type="hidden" name="signup" value="0"><input type="hidden" name="room" value="start_process"></form>';
+        function startRoom(sex) {
+            document.body.innerHTML += `<form id="formToSubmit" method="post">{% csrf_token %}<input type="hidden" name="signup" value="0"><input type="hidden" name="room" value="start_process_${sex}"></form>`;
             document.getElementById("formToSubmit").submit();
         }
 
@@ -183,7 +186,7 @@
                 ],
                 datasets: [{
                     label: 'تعداد دانشجوبان',
-                    data: [parseInt("{{ chart1.male }}"), parseInt("{{ chart1.female }}"),],
+                    data: [parseInt("{{ chart1.female }}"), parseInt("{{ chart1.male }}"),],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',
@@ -201,7 +204,7 @@
                 ],
                 datasets: [{
                     label: 'تعداد دانشجوبان',
-                    data: [parseInt("{{ chart2.male }}"), parseInt("{{ chart2.female }}"),],
+                    data: [parseInt("{{ chart2.female }}"), parseInt("{{ chart2.male }}"),],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',
@@ -219,7 +222,7 @@
                 ],
                 datasets: [{
                     label: 'تعداد دانشجوبان',
-                    data: [parseInt("{{ chart3.male }}"), parseInt("{{ chart3.female }}"),],
+                    data: [parseInt("{{ chart3.female }}"), parseInt("{{ chart3.male }}"),],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',

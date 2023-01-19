@@ -42,9 +42,13 @@ def home(request, *args, **kwargs):
     }
 
     context['all_students'] = all_students.count()
-    context['rooms'] = rooms.count()
+    rooms = Room.objects.all()
+    var = 0
+    for room in rooms:
+        var += int(room.capacity)
+    context['rooms'] = var
 
-    context['left_rooms'] = context['rooms'] - context['all_students']
+    context['left_rooms'] = var - context['all_students']
 
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -56,8 +60,14 @@ def home(request, *args, **kwargs):
             elif signup == '1':
                 start_signup()
                 messages.success(request=request, message='ثبت نام با موفقیت آغاز شد')
-            if room == 'start_process':
-                result = room_assignment()
+            if room == 'start_process_male':
+                result = room_assignment(True)
+                if result[0]:
+                    messages.success(request=request, message='فرایندس تخصیص اتاق ها با موفقیت انجام شد.')
+                else:
+                    messages.error(request=request, message=f'{result[1]}')
+            elif room == 'start_process_female':
+                result = room_assignment(False)
                 if result[0]:
                     messages.success(request=request, message='فرایندس تخصیص اتاق ها با موفقیت انجام شد.')
                 else:
@@ -264,11 +274,11 @@ def room_management(request):
         return redirect(to=login)
 
 
-def room_assignment() -> list:
+def room_assignment(sex: bool = True) -> list:
     # for male , sample flow
-    dorm = Dorm.objects.get(sex=True)
+    dorm = Dorm.objects.get(sex=sex)
     rooms = Room.objects.filter(dorm=dorm)
-    students = UserProfile.objects.all().exclude(grade='مدیر', sex=False)
+    students = UserProfile.objects.all().exclude(sex=sex).exclude(grade='مدیر')
 
     total_students_number = len(students)
     total_room_number = len(rooms)
@@ -393,8 +403,7 @@ def room_assignment() -> list:
         for room in rooms:
             i = int(room.capacity)
             for i in range(0, i):
-                student_ = UserProfile.objects.get(user_instance_id=final_users[last_filled_room]['id']).order_by(
-                    F('requested_roommate').desc(nulls_last=True))
+                student_ = UserProfile.objects.get(user_instance_id=final_users[last_filled_room]['id'])
                 student_.room = room
                 student_.room_confirmed = True
                 student_.save()

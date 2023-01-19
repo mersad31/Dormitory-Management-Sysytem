@@ -24,7 +24,11 @@
                                     <tr>
                                         <th class="text-dir-rtl text-right" scope="row">{{ dorm.code }}</th>
                                         <td>{{ dorm.title }}</td>
-                                        <td>{{ dorm.sex }}</td>
+                                        <td>{% if dorm.sex %}
+                                            آقا
+                                        {% else %}
+                                            خانم
+                                        {% endif %} </td>
                                         <td>{{ dorm.created_date |date:"U" }}</td>
                                         <td>
                                             {% if dorm.status %}
