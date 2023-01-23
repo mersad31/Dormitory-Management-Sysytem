@@ -275,10 +275,9 @@ def room_management(request):
 
 
 def room_assignment(sex: bool = True) -> list:
-    # for male , sample flow
     dorm = Dorm.objects.get(sex=sex)
     rooms = Room.objects.filter(dorm=dorm)
-    students = UserProfile.objects.all().exclude(sex=sex).exclude(grade='مدیر')
+    students = UserProfile.objects.filter(sex=sex).exclude(grade='مدیر')
 
     total_students_number = len(students)
     total_room_number = len(rooms)
