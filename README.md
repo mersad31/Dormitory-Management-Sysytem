@@ -1,89 +1,77 @@
-# Dormitory Management System
+# 🏠 Dormitory Management System
 
-The Dormitory Management System is a web application built with Django and Python to streamline the management of a dormitory or hostel. It provides an intuitive interface for administrators to manage dormitory rooms, student records, and various administrative tasks.
+A Django web app (Persian interface) for running a university dormitory: define dorms and rooms, register students and assign them to rooms.
 
-## Table of Contents
+---
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-## Introduction
+## 🎯 The Problem
 
-The Dormitory Management System is a web application built with Django and Python 
-to streamline the management of a dormitory or hostel. This system provides an efficient
-and user-friendly solution for administrators to handle various aspects of dormitory operations,
-including room management, student records, attendance tracking, fee management, and more.
+Dormitory staff often juggle spreadsheets to track which student lives in which room, how full each room is and who asked to share with whom. This app keeps all of it in one place.
 
-Managing a dormitory or hostel can be a complex task, involving multiple administrative processes and
- a large number of students. This system aims to simplify and automate these processes,
- saving time and effort for administrators while enhancing the overall management efficiency.
- 
-## Features
+## ✨ Features
 
-- Admin Dashboard: A user-friendly dashboard for administrators to manage the dormitory system.
-- Room Management: Add, edit, and delete dormitory rooms. Assign students to rooms and track room occupancy.
-- Student Management: Maintain student records including personal information, contact details, and room assignments.
-- Attendance Tracking: Keep track of student attendance and generate reports.
-- Fee Management: Manage student fees, generate invoices, and track payment status.
-- Noticeboard: Publish important announcements and notifications for students.
-- Staff Management: Manage staff details and their roles within the dormitory.
+| Area | What it does |
+|---|---|
+| Dorm management | Create and edit dorms (code, status, gender) |
+| Room management | Rooms linked to a dorm, with capacity and occupancy |
+| Student management | Student profiles (student number, grade, contact details, native/non-native, paying, early bird, noise sensitivity) |
+| Room assignment | Assign a student to a room and confirm the assignment |
+| Roommate requests | A student can request a specific roommate |
+| Accounts | Registration, login and logout; an admin setting can turn new registrations on or off |
+| Admin | Django admin site for all data |
 
-## Installation
+<!-- TODO: add screenshots of the dashboard, e.g. ![Dashboard](docs/dashboard.png) -->
 
-1. Clone the repository:
+## 🧰 Tech Stack
 
-   ```bash
-   git clone <repository-url>
+| Layer | Technology |
+|---|---|
+| Backend | Python, Django 4.1 |
+| Database | SQLite |
+| Serving | Gunicorn + Nginx |
+| Packaging | Docker, Docker Compose |
+| CI | GitHub Actions |
 
-2. Install the required dependencies:
+## 🚀 Getting Started
 
-		pip install -r requirements.txt
-		
-3. Set up the database:
-		python manage.py migrate
+### Locally
 
-4.Create a superuser for initial access:
+```bash
+git clone https://github.com/mersad31/Dormitory-Management-Sysytem.git
+cd Dormitory-Management-Sysytem
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
 
-		python manage.py createsuperuser
+Open <http://localhost:8000>.
 
-5.Start the development server:
+### With Docker
 
-		python manage.py runserver
+```bash
+docker compose up --build
+```
 
-6. Access the application by visiting 'http://localhost:8000' in your web browser.
+## 🗺️ Main Pages
 
-## Usage
-Log in to the admin dashboard using the superuser credentials.
+| URL | Page |
+|---|---|
+| `/` | Home |
+| `/login`, `/logout`, `/register` | Authentication |
+| `/dorm-management` | Dorms |
+| `/room-management` | Rooms |
+| `/student-management` | Students |
 
-Set up dormitory rooms, staff members, and other necessary data.
+## 📂 Repository Layout
 
-Add student records and assign them to respective rooms.
+| Path | Purpose |
+|---|---|
+| `DormManagementSystem/` | Django project settings and URLs |
+| `Panel/` | Main app: models, views, migrations |
+| `Templates/`, `StaticFiles/` | HTML templates and static assets |
+| `Dockerfile`, `docker-compose.yml`, `nginx.conf` | Container setup |
 
-Monitor attendance, track fees, and manage other administrative tasks using the dashboard.
+## 📝 License
 
-## Contributing
-
-Contributions are welcome! If you want to contribute to the Dormitory Management System, follow these steps:
-
-1. Fork the repository.
-
-2. Create a new branch:
-
-		git checkout -b feature/your-feature-name
-3.Make your changes and commit them:
-
-		git commit -m "Add your commit message"
-		
-4.Push to the branch:
-
-		git push origin feature/your-feature-name
-
-5.Create a pull request in the original repository.
-
-## License
-
-		MIT License
-
+MIT License.
